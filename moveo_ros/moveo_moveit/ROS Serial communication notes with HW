@@ -1,0 +1,46 @@
+ROS serial comunication notes with hardware: 
+
+ROS Steps for the connection between hardware and Moveit: 
+1- $ cd arduino-1.8.6 >>> $ ./arduino >>> upload arduino code 
+2- $ roscore
+3- $ roslaunch gerad_moveit_config_2 demo.launch
+4- $ rosrun rosserial_python serial_node.py /dev/ttyACM0 
+5- $ rosrun moveo_moveit moveit_convert ... (converts simulation joint_state rotations to steps and publishes on the /joint_steps topic, which the Arduino script subscribes to)
+6- rosmsg echo 
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+ROS Tele-op communication: 
+
+1- $ roscore 
+2- $ roslaunch rosbridge_server rosbridge_websocket.launch
+3- $ rosrun file_server file_server
+4- $ roslaunch gerad_moveit_config_2 demo.launch
+5- $ rosrun gerad_moveit_config_2 odom2path.py 
+------------------------------------------------------------------------------------------------
+problems TBD 
+
+joint_steps & joint_states data conv. 
+From rad to Stepper steps : [ang_in_rad / (2*pi)]* steps/rev 
+
+GAZEBO syntax 
+roslaunch gerad_moveit_config_2 gazebo.launch
+
+
+
+
+Final launch codes
+
+ROS Steps for the connection between hardware and Moveit using the neural codes:
+ check that you have done catkin_make
+0. $ sudo chmod 666 /dev/ttyACM0
+
+1- $ cd arduino-1.8.6 >>> $ ./arduino >>> upload arduino code 
+2- $ roscore
+3- $ roslaunch moveit_urdf_v4 demo.launch
+4- $ rosrun rosserial_python serial_node.py /dev/ttyACM0 
+5- $ cd catkin_ws/src/moveit_urdf_v4/scripts   >>>    rosrun moveit_urdf_v4 forward4.py
+5- $ rosrun moveit_urdf_v4 moveit_convert   >>> (converts simulation joint_state rotations to steps and publishes on the /joint_steps topic, which the Arduino script subscribes to)
+6- $ rosmsg echo 
+
+
+rosrun rosserial_python serial_node.py _port:=/dev/ttyACM0 _baud:=9600
