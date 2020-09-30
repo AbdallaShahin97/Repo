@@ -1,0 +1,33 @@
+﻿
+<launch>
+
+ 	<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch">
+		<param name="port" value="9090"/>
+	</include>
+
+	<node name="file_server" pkg="file_server" type="file_server" output="screen"/>
+
+	<include file="$(find moveit_urdf_v4)/launch/demo.launch">
+
+
+	</include>
+	
+	<node name="serial" pkg="rosserial_python" type="serial_node.py" args="/dev/ttyACM0" output="screen" launch-prefix="xterm -e" respawn="true" respawn_delay="30" />
+ 	
+	<node name="convert" pkg="$(find moveo_moveit)" type="moveit_convert" output="screen"  launch-prefix="xterm -e" respawn="true"   />
+	
+	<node name="camera_pose" pkg="moveit_urdf_v4" type="campose.py" output="screen" launch-prefix="xterm -e"  respawn="true" respawn_delay="30"  />
+
+
+	<node name="odom2path" pkg="gerad_moveit_config_2" type="odom2path.py" output="screen" launch-prefix="xterm -e"  respawn="true" respawn_delay="30"  />
+
+	<include file="$(find openni_launch)/launch/openni.launch"  output="screen" launch-prefix="xterm -e" respawn="true"  respawn_delay="30" >
+	</include>
+
+
+	<node name="web_video_server" pkg="web_video_server" type="web_video_server" output="screen" launch-prefix="xterm -e"  respawn="true" respawn_delay="30" />
+
+	
+
+	
+</launch>
