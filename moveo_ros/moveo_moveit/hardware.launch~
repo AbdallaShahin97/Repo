@@ -1,0 +1,12 @@
+﻿
+<launch>
+
+
+ 	
+	<node name="convert" pkg="$(find moveit_urdf_v4)" type="moveit_convert" output="screen" />
+	
+
+	<node name="serial" pkg="rosserial_python" type="serial_node.py" args="/dev/ttyACM0" output="screen" launch-prefix="xterm -e" />
+
+	
+</launch>
