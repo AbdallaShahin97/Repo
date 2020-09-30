@@ -1,0 +1,4 @@
+
+python3 calling_DNN.py
+rosrun moveit_urdf_v4 forward2.py
+
